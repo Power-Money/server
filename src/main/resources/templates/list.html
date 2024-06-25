@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Expense List</title>
+    <title>가계부 목록</title>
 </head>
 <body>
-<h1>Expense List</h1>
+<h1>가계부 목록</h1>
 
 
 <form th:action="@{/expense/register}" th:object="${expenseDTO}" method="post">
-    Title: <input type="text" th:field="*{title}"><br>
-    Description: <input type="text" th:field="*{description}"><br>
-    Amount: <input type="number" th:field="*{amount}"><br>
-    <button type="submit">Register</button>
+    제목: <input type="text" th:field="*{title}"><br>
+    설명: <input type="text" th:field="*{description}"><br>
+    금액: <input type="number" th:field="*{amount}"><br>
+    <button type="submit">등록</button>
 </form>
 
 <hr>
@@ -21,13 +21,13 @@
 <table border="1">
     <thead>
     <tr>
-        <th>No.</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Amount</th>
-        <th>Registered Date</th>
-        <th>Modified Date</th>
-        <th>Action</th>
+        <th>번호</th>
+        <th>제목</th>
+        <th>설명</th>
+        <th>금액</th>
+        <th>등록일</th>
+        <th>수정일</th>
+        <th>동작</th>
     </tr>
     </thead>
     <tbody>
@@ -36,26 +36,27 @@
         <td th:text="${expense.title}"></td>
         <td th:text="${expense.description}"></td>
         <td th:text="${expense.amount}"></td>
-        <td th:text="${expense.regDate}"></td>
-        <td th:text="${expense.modDate}"></td>
+        <td th:text="${#dates.format(expense.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${#dates.format(expense.modDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
         <td>
-            <a th:href="@{/expense/read(eno=${expense.eno})}">Read</a>
-            <a th:href="@{/expense/modify(eno=${expense.eno})}">Modify</a>
-            <a th:href="@{/expense/remove(eno=${expense.eno})}" onclick="return confirm('Are you sure?')">Delete</a>
+            <a th:href="@{/expense/read(eno=${expense.eno})}">조회</a>
+            <a th:href="@{/expense/modify(eno=${expense.eno})}">수정</a>
+            <a th:href="@{/expense/remove(eno=${expense.eno})}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
         </td>
     </tr>
     </tbody>
 </table>
 
+
 <div th:if="${expenseDTO != null}">
-    <h2>Modify Expense</h2>
+    <h2>가계부 수정</h2>
     <form th:action="@{/expense/modify}" th:object="${expenseDTO}" method="post">
         <input type="hidden" th:field="*{eno}">
-        Title: <input type="text" th:field="*{title}"><br>
-        Description: <input type="text" th:field="*{description}"><br>
-        Amount: <input type="number" th:field="*{amount}"><br>
-        <button type="submit">Modify</button>
-        <a th:href="@{/list}">Cancel</a>
+        제목: <input type="text" th:field="*{title}"><br>
+        설명: <input type="text" th:field="*{description}"><br>
+        금액: <input type="number" th:field="*{amount}"><br>
+        <button type="submit">수정</button>
+        <a th:href="@{/list}">취소</a>
     </form>
 </div>
 </body>
