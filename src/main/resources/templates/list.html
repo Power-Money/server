@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Expense List</title>
+</head>
+<body>
+<h1>Expense List</h1>
+
+
+<form th:action="@{/expense/register}" th:object="${expenseDTO}" method="post">
+    Title: <input type="text" th:field="*{title}"><br>
+    Description: <input type="text" th:field="*{description}"><br>
+    Amount: <input type="number" th:field="*{amount}"><br>
+    <button type="submit">Register</button>
+</form>
+
+<hr>
+
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>No.</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Registered Date</th>
+        <th>Modified Date</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="expense : ${pageResultDTO.dtoList}">
+        <td th:text="${expense.eno}"></td>
+        <td th:text="${expense.title}"></td>
+        <td th:text="${expense.description}"></td>
+        <td th:text="${expense.amount}"></td>
+        <td th:text="${expense.regDate}"></td>
+        <td th:text="${expense.modDate}"></td>
+        <td>
+            <a th:href="@{/expense/read(eno=${expense.eno})}">Read</a>
+            <a th:href="@{/expense/modify(eno=${expense.eno})}">Modify</a>
+            <a th:href="@{/expense/remove(eno=${expense.eno})}" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div th:if="${expenseDTO != null}">
+    <h2>Modify Expense</h2>
+    <form th:action="@{/expense/modify}" th:object="${expenseDTO}" method="post">
+        <input type="hidden" th:field="*{eno}">
+        Title: <input type="text" th:field="*{title}"><br>
+        Description: <input type="text" th:field="*{description}"><br>
+        Amount: <input type="number" th:field="*{amount}"><br>
+        <button type="submit">Modify</button>
+        <a th:href="@{/list}">Cancel</a>
+    </form>
+</div>
+</body>
+</html>
