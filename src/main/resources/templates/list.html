@@ -7,7 +7,6 @@
 <body>
 <h1>가계부 목록</h1>
 
-
 <form th:action="@{/expense/register}" th:object="${expenseDTO}" method="post">
     제목: <input type="text" th:field="*{title}"><br>
     설명: <input type="text" th:field="*{description}"><br>
@@ -16,7 +15,6 @@
 </form>
 
 <hr>
-
 
 <table border="1">
     <thead>
@@ -46,18 +44,5 @@
     </tr>
     </tbody>
 </table>
-
-
-<div th:if="${expenseDTO != null}">
-    <h2>가계부 수정</h2>
-    <form th:action="@{/expense/modify}" th:object="${expenseDTO}" method="post">
-        <input type="hidden" th:field="*{eno}">
-        제목: <input type="text" th:field="*{title}"><br>
-        설명: <input type="text" th:field="*{description}"><br>
-        금액: <input type="number" th:field="*{amount}"><br>
-        <button type="submit">수정</button>
-        <a th:href="@{/list}">취소</a>
-    </form>
-</div>
 </body>
 </html>
